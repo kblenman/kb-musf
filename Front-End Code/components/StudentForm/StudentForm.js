@@ -83,7 +83,6 @@ class StudentForm extends React.Component {
 			isValid = false;
 		}
 
-
 		/* 	Check for unique disciplines when the selected choice
 			isnt 'None' */
 		if (this.state.discipline1 !== "None") {
@@ -109,7 +108,7 @@ class StudentForm extends React.Component {
 			let lowerLastName = this.state.lastName.toLowerCase();
 			let newLastName = lowerLastName[0].toUpperCase() + lowerLastName.slice(1);
 
-			fetch('http://localhost:3001/submitform', {
+			fetch('https://musf-server-database.herokuapp.com/submitform', {
 				method: 'post',
 				headers: {'Content-type': 'application/json'},
 				body: JSON.stringify({
@@ -136,8 +135,8 @@ class StudentForm extends React.Component {
 			let errorAlertDiv = document.getElementById("submission-error");
 			errorAlertDiv.classList.remove("dn");
 		}
-	}
 
+	}
 
 	render() {
 		return (

@@ -26,7 +26,7 @@ class AdminLogin extends React.Component {
 		pops up.
 	*/
 	OnSubmitSignin = () => {
-		fetch('http://localhost:3001/signin', {
+		fetch('https://musf-server-database.herokuapp.com/signin', {
 			method: 'post',
 			headers: {'Content-type': 'application/json'},
 			body: JSON.stringify({
@@ -43,7 +43,8 @@ class AdminLogin extends React.Component {
 				this.props.loadAdminInfo(data);
 				this.props.onRouteChange('signin');
 			}
-		})	
+		})
+		.catch(console.log)	
 	}
 
 	render () {

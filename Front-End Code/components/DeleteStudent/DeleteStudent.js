@@ -36,9 +36,6 @@ class DeleteStudent extends React.Component {
 		if (this.state.studentID === '') {
 			isValid = false;
 		}
-
-		/* Validate that the user doesn't enter anything greater than 200 */
-		
 		
 		if (isValid) {
 			/* Dialog box to confirm deletion */
@@ -46,7 +43,7 @@ class DeleteStudent extends React.Component {
 
 			if (isConfirmed) {
 				/* Delete student from the database */
-				fetch('http://localhost:3001/delete/' + this.state.studentID, {
+				fetch('https://musf-server-database.herokuapp.com/delete/' + this.state.studentID, {
 					method: 'delete',
 					headers: {'Content-type': 'application/json'},
 				})
@@ -65,18 +62,13 @@ class DeleteStudent extends React.Component {
 					/* Reset state values */
 					document.getElementById("studentIDInput").value = '';
 					this.setState(Object.assign(this.state, {studentID: ''}));
-				})
+				})	
 			}
 			else {
 				/* Reset state values */
 				document.getElementById("studentIDInput").value = '';
 				this.setState(Object.assign(this.state, {studentID: ''}));
 			}
-		}
-		else {
-			/* Reset state values */
-			document.getElementById("studentIDInput").value = '';
-			this.setState(Object.assign(this.state, {studentID: ''}));
 		}
 	}
 
@@ -97,11 +89,9 @@ class DeleteStudent extends React.Component {
 			  		className="red darken-2 white-text btn waves-effect waves-light" type="submit" name="action">
 			  			Delete
 			  		</button>
-			  	</div>
+		  		</div>
 
-
-			  	
-		  		{/* Confirmation messages for student deletes. (no/unsuccessful delete 
+		  		{/*Confirmation messages for student deletes. (no/unsuccessful delete 
 			  	and successful delete)*/}
 		  		<div className="f4 ttu tracked center pa2 ma2 red-text text-darken-2 underline dn" id="unsuccessful-delete">
 		  			<p>No student deleted</p>
