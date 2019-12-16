@@ -73,6 +73,32 @@ class StudentForm extends React.Component {
 			isValid = false;
 		}
 
+		/* Check if the first or last name contains numbers, spaces, or special chracters.
+		Solution help found at: 
+		https://stackoverflow.com/questions/5778020/check-whether-an-input-string-contains-a-number-in-javascript*/
+		let firstNameHasSpecial = /\d|\s|[~!@#$%^&*()_=+[\]{}:;,.<>/?'"¡™️£¢∞§¶•ªº–≠œ∑´®️†¥¨ˆøπ“‘«åß©️˙∆˚¬…æΩ≈˜µ≤≥÷ç√]|--/.test(this.state.firstName);
+		let lastNameHasSpecial = /\d|\s|[~!@#$%^&*()_=+[\]{}:;,.<>/?'"¡™️£¢∞§¶•ªº–≠œ∑´®️†¥¨ˆøπ“‘«åß©️˙∆˚¬…æΩ≈˜µ≤≥÷ç√]|--/.test(this.state.lastName);
+
+		if (lastNameHasSpecial || firstNameHasSpecial) {
+			isValid = false;
+		}
+
+
+		/* 	Check for unique disciplines when the selected choice
+			isnt 'None' */
+		if (this.state.discipline1 !== "None") {
+			if (this.state.discipline1 === this.state.discipline2 || 
+			this.state.discipline1 === this.state.discipline3) {
+				isValid = false;
+			}
+		}
+		if (this.state.discipline2 !== "None") {
+			if (this.state.discipline2 === this.state.discipline3) {
+				isValid = false
+			}
+		}
+
+
 		/* If everything is valid, send the form. If not, display the error
 		   message. */
 		if (isValid) {
@@ -83,7 +109,7 @@ class StudentForm extends React.Component {
 			let lowerLastName = this.state.lastName.toLowerCase();
 			let newLastName = lowerLastName[0].toUpperCase() + lowerLastName.slice(1);
 
-			fetch('https://musf-server-database.herokuapp.com/submitform', {
+			fetch('http://localhost:3001/submitform', {
 				method: 'post',
 				headers: {'Content-type': 'application/json'},
 				body: JSON.stringify({
@@ -104,19 +130,18 @@ class StudentForm extends React.Component {
 					console.log(student);
 					this.props.onRouteChange('successfulSubmit');
 				}
-			})
-			.catch(console.log)	
+			})	
 		}
 		else {
 			let errorAlertDiv = document.getElementById("submission-error");
 			errorAlertDiv.classList.remove("dn");
 		}
-
 	}
+
 
 	render() {
 		return (
-			<div className="athelas bg-light-gray flex flex-column f3 ma4 pa4 shadow-4">
+			<div className="athelas bg-light-gray flex flex-column f3 mt4 mb4 mr4 ml4 mr7-l ml7-l pa4 shadow-4">
 
 				<h2 className="usf-green f2 ttu tracked bb">Basic Information</h2>
 
@@ -275,8 +300,10 @@ class StudentForm extends React.Component {
 			  	{/*<!-- Submit form error message */}
 		  		<div className="athelas center w-100 w-60-ns mt4 ba dn" id="submission-error">
 					<p className="bg-red text-white pa2 mt0">Submission Error!</p>
-					<p className="f4 lh-copy pl3 pr3">Please ensure that the first and last name fields are 
-					completed and each project choice is different then try submitting again.</p>
+					<p className="f4 lh-copy pl3 pr3">Please ensure that: (1) The first and 
+					last name fields are completed and do not contain numbers (2) each 
+					discipline choice is different and (3) each project choice is different
+					then try submitting again.</p>
 				</div>
 
 			  	{/*<!-- End of the student form -->*/}

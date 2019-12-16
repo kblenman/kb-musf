@@ -91,9 +91,26 @@ app.post ('/submitform', (req, res) => {
 		.catch(err => res.status(400).json('Unable to submit form'));
 })
 
+/* Delete a student fromt the database */
+app.delete ('/delete/:id', (req, res) => {
+	matchDB('studentforms')
+		.where('id', req.params.id)
+		.del()
+		.then(rowsDeleted => {
+			if (rowsDeleted === 0) {
+				res.json('Nothing deleted');
+			}
+			else {
+				res.json('Student ' + req.params.id + ' deleted');
+			}
+		})
+		.catch(err => res.status(400).json('Unable to delete student'));
+})
+
 app.listen(process.env.PORT || 3001, () => {
 	console.log(`app is running on port ${process.env.PORT}`);
 })
+
 
 
 /*
