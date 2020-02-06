@@ -28,3 +28,24 @@ In order to make the process of matching students into compatible groups faster 
 Students using Match USF will simply need to fill out and submit a web-form containing their basic information, the top 3 projects they would be interested in working on (from most preferred to least preferred), and what time they are typically available.
 ### For Instructors
 Instructors using Match USF will be able to login, view all the current submitted forms, delete forms, and finally run a create groups function that automatically creates and displays suggested groups of 3 or 4 based on shared project interests and available times.
+## Technology Used
+- **Hosted on:**
+  - Heroku
+- **Front-end Tools:**
+  - React
+  - Tachyons
+  - Materialize
+- **Back-end Tools:**
+  - Node
+  - Express
+  - PostgreSQL
+## About the Grouping Algorithm
+The grouping algorithm creates groups of 3 or 4 (max) based on compatible availability time and project choice. It attempts to assign students to their first choice then filters down choice levels from there until most students have been assigned to a group. Students that were not able to be assigned are added to a final "Unassigned Students" group. From there, the instructor can contact and/or manually place the unassigned student(s) into another group, overriding the group size limit or availability constraint at their own discretion.
+
+
+#### Students in the unassigned group are typically there for one or more of the following reasons:
+- None of their selected choices had enough people to make a group
+    - For example, two people selected project 5 as their 1st or 2nd choice but the algorithm couldn’t find a 3rd member to add
+- The student picked all choices that no one else picked
+- There was a project that met the students 1st, 2nd, or 3rd choice open **BUT** the time availability did not match
+- There was a project that met the student’s 1st, 2nd, or 3rd choice **AND** time availability **BUT** it was already maxed 
